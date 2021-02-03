@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="AppSecAssignment.Register" %>
+﻿    <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="AppSecAssignment.Register" %>
 
 <!DOCTYPE html>
 
@@ -60,7 +60,7 @@
     <form id="form1" runat="server">
         <div>
             <asp:Label ID="Label1" runat="server" Text="First Name: "></asp:Label>
-            <asp:TextBox ID="tbFirstName" runat="server"></asp:TextBox>
+            <asp:TextBox ID="tbFirstName" runat="server" ></asp:TextBox>
             <br />
             <asp:Label ID="Label2" runat="server" Text="Last Name: "></asp:Label>
             <asp:TextBox ID="tbLastName" runat="server"></asp:TextBox>
@@ -72,7 +72,7 @@
             <asp:TextBox ID="tbCC" runat="server"></asp:TextBox>
             <br />
             <asp:Label ID="Label4" runat="server" Text="Email: "></asp:Label>
-            <asp:TextBox ID="tbEmail" runat="server"></asp:TextBox>
+            <asp:TextBox ID="tbEmail" runat="server" TextMode="Email"></asp:TextBox>
             <br />
             <asp:Label ID="Label5" runat="server" Text="Password: "></asp:Label>
             <asp:TextBox ID="tbPassword" runat="server" OnTextChanged="tbPassword_TextChanged" onkeyup="javascript:validate()" TextMode="Password"></asp:TextBox>

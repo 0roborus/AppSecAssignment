@@ -153,7 +153,7 @@ namespace AppSecAssignment
                 Key = cipher.Key;
                 IV = cipher.IV;
                 createAccount();
-                Response.Redirect("Login.aspx", false);
+                Response.Redirect("Login.aspx?Email=" + HttpUtility.UrlEncode(HttpUtility.HtmlEncode(tbEmail.Text)), false);
             }
         }
 
@@ -163,7 +163,7 @@ namespace AppSecAssignment
             {
                 using (SqlConnection con = new SqlConnection(MYDBConnectionString))
                 {
-                    using (SqlCommand cmd = new SqlCommand("INSERT INTO [User] VALUES(@FName, @LName, @CreditCard, @Email, @PasswordHash, @PasswordSalt, @DOB)"))
+                    using (SqlCommand cmd = new SqlCommand("INSERT INTO [User] VALUES(@FName, @LName, @CreditCard, @Email, @PasswordHash, @PasswordSalt, @DOB, 1)"))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
