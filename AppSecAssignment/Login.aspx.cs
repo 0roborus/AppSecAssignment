@@ -18,7 +18,7 @@ namespace AppSecAssignment
         protected void Page_Load(object sender, EventArgs e)
         {
             lbl_Error.Text = "";
-            lbl_Test.Text = Request.QueryString["Comment"];
+            lbl_Test.Text = HttpUtility.HtmlEncode(Request.QueryString["Comment"]);
             lbl_Test.ForeColor = Color.Green;
         }
 
@@ -26,7 +26,6 @@ namespace AppSecAssignment
         {
             if (ValidateCaptcha())
             {
-                tbEmail.Text = tbEmail.Text;
                 string email = tbEmail.Text.ToString().Trim();
                 string pwd = tbPassword.Text.ToString().Trim();
                 SHA512Managed hashing = new SHA512Managed();
@@ -47,6 +46,7 @@ namespace AppSecAssignment
 
                                 string guid = Guid.NewGuid().ToString();
                                 Session["AuthToken"] = guid;
+                                Session["Email"] = email;
 
                                 Response.Cookies.Add(new HttpCookie("AuthToken", guid));
 
@@ -248,7 +248,7 @@ namespace AppSecAssignment
 
         protected void btnRecover_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Recover.aspx?Email=" + HttpUtility.UrlEncode(HttpUtility.HtmlEncode(tbEmail.Text)), false);
+            Response.Redirect("Recover.aspx", false);
         }
     }
 }

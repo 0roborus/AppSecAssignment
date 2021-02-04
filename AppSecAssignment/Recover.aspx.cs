@@ -14,7 +14,14 @@ namespace AppSecAssignment
         System.Configuration.ConfigurationManager.ConnectionStrings["MYDBConnection"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (Session["Email"] == null)
+            {
+                Response.Redirect("Login.aspx", false);
+            }
+            else
+            {
+                string email = Session["Email"].ToString();
+            }
         }
 
         private string ActivateLoginAccount(string email)   
@@ -40,7 +47,7 @@ namespace AppSecAssignment
         {
             if (tbVC.Text.ToLower() == Session["CaptchaVerify"].ToString())
             {
-                ActivateLoginAccount(Request.QueryString["Email"]);
+                ActivateLoginAccount(Session["Email"].ToString());
                 string comment = "Account Unlocked!";
                 Response.Redirect("Login.aspx?Comment=" + HttpUtility.UrlEncode(HttpUtility.HtmlEncode(comment)));
             }

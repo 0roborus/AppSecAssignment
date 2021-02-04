@@ -16,11 +16,11 @@ namespace AppSecAssignment
     public partial class Register : System.Web.UI.Page
     {
         string MYDBConnectionString =
-        System.Configuration.ConfigurationManager.ConnectionStrings["MYDBConnection"].ConnectionString;
-        static string finalHash;
-        static string salt;
-        byte[] Key;
-        byte[] IV;
+            System.Configuration.ConfigurationManager.ConnectionStrings["MYDBConnection"].ConnectionString;
+            private string finalHash;
+            private string salt;
+            byte[] Key;
+            byte[] IV;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -123,7 +123,7 @@ namespace AppSecAssignment
             {
                 score++;
             }
-            tbPassword.Text = password;
+            tbPassword.Text = HttpUtility.HtmlEncode(password);
             return score;
         }
 
@@ -145,7 +145,6 @@ namespace AppSecAssignment
                 salt = Convert.ToBase64String(saltByte);
                 SHA512Managed hashing = new SHA512Managed();
                 string pwdWithSalt = pwd + salt;
-                byte[] plainHash = hashing.ComputeHash(Encoding.UTF8.GetBytes(pwd));
                 byte[] hashWithSalt = hashing.ComputeHash(Encoding.UTF8.GetBytes(pwdWithSalt));
                 finalHash = Convert.ToBase64String(hashWithSalt);
                 RijndaelManaged cipher = new RijndaelManaged();
@@ -153,7 +152,7 @@ namespace AppSecAssignment
                 Key = cipher.Key;
                 IV = cipher.IV;
                 createAccount();
-                Response.Redirect("Login.aspx?Email=" + HttpUtility.UrlEncode(HttpUtility.HtmlEncode(tbEmail.Text)), false);
+                Response.Redirect("Login.aspx", false);
             }
         }
 
@@ -163,7 +162,7 @@ namespace AppSecAssignment
             {
                 using (SqlConnection con = new SqlConnection(MYDBConnectionString))
                 {
-                    using (SqlCommand cmd = new SqlCommand("INSERT INTO [User] VALUES(@FName, @LName, @CreditCard, @Email, @PasswordHash, @PasswordSalt, @DOB, 1)"))
+                    using (SqlCommand cmd = new SqlCommand("INSERT INTO [User] VALUES(@FName, @LName, @CreditCard, @Email, @PasswordHash, @PasswordSalt, @DOB, 1, @Time, @Age)"))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
@@ -174,7 +173,9 @@ namespace AppSecAssignment
                             cmd.Parameters.AddWithValue("@Email", tbEmail.Text.Trim());
                             cmd.Parameters.AddWithValue("@PasswordHash", finalHash);
                             cmd.Parameters.AddWithValue("@PasswordSalt", salt);
-                            cmd.Parameters.AddWithValue("@DOB", tbDOB.Text);                
+                            cmd.Parameters.AddWithValue("@DOB", tbDOB.Text);
+                            cmd.Parameters.AddWithValue("@Time", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@Age", finalHash);
                             cmd.Connection = con;   
                             con.Open();
                             cmd.ExecuteNonQuery();
@@ -199,7 +200,6 @@ namespace AppSecAssignment
                 cipher.IV = IV;
                 cipher.Key = Key;
                 ICryptoTransform encryptTransform = cipher.CreateEncryptor();
-                //ICryptoTransform decryptTransform = cipher.CreateDecryptor();
                 byte[] plainText = Encoding.UTF8.GetBytes(data);
                 cipherText = encryptTransform.TransformFinalBlock(plainText, 0,
                plainText.Length);

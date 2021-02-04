@@ -72,6 +72,7 @@
       <DependentUpon>MYDB.mdf</DependentUpon>
     </Content>
     <Content Include="Captcha.aspx" />
+    <Content Include="ChangePass.aspx" />
     <Content Include="CustomError\GenericError.html" />
     <Content Include="CustomError\HTTP403.html" />
     <Content Include="CustomError\HTTP404.html" />
@@ -89,6 +90,13 @@
     </Compile>
     <Compile Include="Captcha.aspx.designer.cs">
       <DependentUpon>Captcha.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePass.aspx.cs">
+      <DependentUpon>ChangePass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChangePass.aspx.designer.cs">
+      <DependentUpon>ChangePass.aspx</DependentUpon>
     </Compile>
     <Compile Include="HomePage.aspx.cs">
       <DependentUpon>HomePage.aspx</DependentUpon>

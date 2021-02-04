@@ -12,6 +12,7 @@
             <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
             <br />
             <asp:Button ID="btnLogout" runat="server" Text="Logout" OnClick="btnLogout_Click" />
+            <asp:Button ID="btnChangePass" runat="server" Text="Change Password" OnClick="btnChangePass_Click" />
         </div>
     </form>
 </body>
