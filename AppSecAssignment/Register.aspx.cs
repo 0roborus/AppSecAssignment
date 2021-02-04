@@ -123,7 +123,6 @@ namespace AppSecAssignment
             {
                 score++;
             }
-            tbPassword.Text = HttpUtility.HtmlEncode(password);
             return score;
         }
 
